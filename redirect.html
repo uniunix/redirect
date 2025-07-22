@@ -1,9 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="refresh" content="0;url=https://example.com">
+  <meta charset="UTF-8">
+  <title>Redirecting...</title>
 </head>
 <body>
-  Redirecting...
+  <p>Redirecting...</p>
+  <script>
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const redirectUrl = params.get('redirectUrl');
+
+      if (redirectUrl) {
+        // 安全のために簡易チェック（http/httpsスキームのみ許可）
+        if (/^https?:\/\//.test(redirectUrl)) {
+          window.location.href = redirectUrl;
+        } else {
+          document.body.innerHTML = '<p>Invalid redirectUrl</p>';
+        }
+      } else {
+        document.body.innerHTML = '<p>No redirectUrl provided.</p>';
+      }
+    })();
+  </script>
 </body>
 </html>
